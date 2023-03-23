@@ -23,12 +23,14 @@ class UniversitySpec
         
         
         UniversitySpec::Courses getCourses() const { return _courses; }
-        std::string_view get_courses_str() const { return Courses_str[(std::size_t)_courses]; }
+        std::string_view getCoursesStr() const { return Courses_str[(std::size_t)_courses]; }
         
         UniversitySpec::Location getLocation() const { return _location; }
-        std::string_view get_location_str() const { return Location_str[(std::size_t)_location]; }
+        std::string_view getLocationStr() const { return Location_str[(std::size_t)_location]; }
         
         double getTuitionPrice() const { return _tuition_price; }
+
+        bool matches(const UniversitySpec & spec) const;
     
     private:
         double _tuition_price;

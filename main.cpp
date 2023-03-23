@@ -8,14 +8,17 @@ using namespace std;
 // outputs abstraction object properties to the console window
 void show(const University & item)
 {
-    auto is { item.getSpec() };
-
     cout << item.getId() << " "
-        << "'" << item.getName() << "' "
-        << "'" << is.get_courses_str() << "' "
-        << "'" << is.get_location_str() << "' "
-        << is.getTuitionPrice() << " "
-        << endl;
+         << item.getName() << " ";
+
+    auto is_p { item.getSpec() };
+    if(is_p)
+    {
+    cout << is_p->getCoursesStr() << " "
+         << is_p->getLocationStr() << " "
+         << is_p->getTuitionPrice() << " ";
+    }
+    cout<< endl;
 }
 
 // solution entry function
@@ -24,7 +27,7 @@ int main()
     Inventory inv;
 
     // adds several different abstraction objects to the inventory
-    UniversitySpec spec_uni{ 20.500, UniversitySpec::Courses::ENGINEERING, UniversitySpec::Location::EUROPE};
+    std::shared_ptr<UniversitySpec> spec_uni{ new UniversitySpec(20.500, UniversitySpec::Courses::ENGINEERING, UniversitySpec::Location::EUROPE)};
     inv.add_item(1, "Riga Technical University", spec_uni);
     inv.add_item(2, "Tallinn University of Technology", spec_uni);
 
@@ -32,9 +35,11 @@ int main()
 
     //creating university objects which are only being served as query type for inventory
     // provides querying values (some can be default (e.g., "", 0) to denote unset criteria)
-    show(inv.find_item(University{0, "Riga Technical University", UniversitySpec{ }}));
+    std::shared_ptr<UniversitySpec> look_spec_uni{ new UniversitySpec(20.500, UniversitySpec::Courses::ENGINEERING, UniversitySpec::Location::EUROPE)};
+    show(inv.find_item(University{0, "Riga Technical University", look_spec_uni}));
 
-    show(inv.find_item(University{2, "", UniversitySpec{ 0.0, UniversitySpec::Courses::ENGINEERING, UniversitySpec::Location::ANY }}));
+    std::shared_ptr<UniversitySpec> look_spec_uni2{ new UniversitySpec(20.200, UniversitySpec::Courses::HEALTHS, UniversitySpec::Location::OCEANIA)};
+    show(inv.find_item(University{2, "", look_spec_uni2}));
 
     return 0;
 }

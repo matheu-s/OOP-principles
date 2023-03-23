@@ -2,7 +2,9 @@
 #ifndef INVENTORY
 #define INVENTORY
 
+#include <memory>
 #include "University.h"
+using namespace std;
 
 class Inventory
 {
@@ -14,9 +16,7 @@ class Inventory
         University find_item(const University & query) const;
         University find_item(const UniversitySpec & query) const;
         
-        void add_item(int id, string name, const UniversitySpec & spec);
-
-
+        void add_item(int id, string name, std::shared_ptr<const UniversitySpec> spec);
 
     private:
         static const size_t MAX_SIZE{ 20 };
