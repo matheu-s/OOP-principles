@@ -1,7 +1,7 @@
 #include "Inventory.h"
 #include <cmath>
 
-void Inventory::add_item(int id, string name, const UniversitySpec & spec)
+void Inventory::add_item(int id, string name, std::shared_ptr<const UniversitySpec> spec)
 {
     if (_count < Inventory::MAX_SIZE)
     {
@@ -27,21 +27,11 @@ University Inventory::find_item (const University & query) const
             && query.getName() != _items[i].getName())
             continue;
 
-        auto item_spec{ _items[i].getSpec() };
 
-        // for double type
-        constexpr double epsil{ 0.005 };
-        if (query_spec.getTuitionPrice() != 0.0
-            && epsil < std::abs(query_spec.getTuitionPrice() - item_spec.getTuitionPrice()))
-            continue;
-
-		if (query_spec.getCourses() != UniversitySpec::Courses::ANY
-			&& query_spec.getCourses() != item_spec.getCourses())
-            continue;
-
-		if (query_spec.getLocation() != UniversitySpec::Location::ANY
-			&& query_spec.getLocation() != item_spec.getLocation())
-            continue;
+        if(query.getSpec()
+            && _items[i].getSpec()
+            && _items[i].getSpec()->matches(*query.getSpec()))
+            return _items[i];
 
         return _items[i];
     }
@@ -53,22 +43,8 @@ University Inventory::find_item (const UniversitySpec & query_spec) const
 {
     for (size_t i = 0; i < _count; i++)
     {
-        auto item_spec{ _items[i].getSpec() };
-
-        constexpr double epsil{ 0.005 };
-        if (query_spec.getTuitionPrice() != 0.0
-            && epsil < std::abs(query_spec.getTuitionPrice() - item_spec.getTuitionPrice()))
-            continue;
-
-		if (query_spec.getCourses() != UniversitySpec::Courses::ANY
-			&& query_spec.getCourses() != item_spec.getCourses())
-            continue;
-
-		if (query_spec.getLocation() != UniversitySpec::Location::ANY
-			&& query_spec.getLocation() != item_spec.getLocation())
-            continue;
-
-        return _items[i];
+        if(_items[i].getSpec() && _items[i].getSpec()->matches(query_spec))
+            return _items[i];
     }
 
     return University{};
