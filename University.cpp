@@ -1,11 +1,21 @@
 #include "University.h"
 
-//University::University(
-//    int id, 
-//    std::string name,
-//    const UniversitySpec & spec)
-//{
-//    _id = id;
-//    _name = name;
-//    _spec = spec;
-//}
+#include <string>
+
+std::ostream & operator<<(std::ostream & os, const University & item)
+{
+    item.send_to(os);
+    return os;
+}
+
+void University::send_to(std::ostream & os) const
+{
+    os << _id << ';'
+       << _name;
+
+    if (_spec)
+    {
+        os << ';';
+        _spec->send_to(os);
+    }
+}

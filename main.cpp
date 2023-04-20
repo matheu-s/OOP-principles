@@ -8,17 +8,7 @@ using namespace std;
 // outputs abstraction object properties to the console window
 void show(const University & item)
 {
-    cout << item.getId() << " "
-         << item.getName() << " ";
-
-    auto is_p { item.getSpec() };
-    if(is_p)
-    {
-    cout << is_p->getCoursesStr() << " "
-         << is_p->getLocationStr() << " "
-         << is_p->getTuitionPrice() << " ";
-    }
-    cout<< endl;
+    cout << item << "\n";
 }
 
 // solution entry function
@@ -26,7 +16,6 @@ int main()
 {
     Inventory inv;
 
-    // adds several different abstraction objects to the inventory
     std::shared_ptr<UniversitySpec> spec_uni{ new UniversitySpec(20.500, UniversitySpec::Courses::ENGINEERING, UniversitySpec::Location::EUROPE)};
     inv.add_item(1, "Riga Technical University", spec_uni);
     inv.add_item(2, "Tallinn University of Technology", spec_uni);
