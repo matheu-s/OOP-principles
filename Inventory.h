@@ -13,6 +13,14 @@ class Inventory
             : _count{0}
             {}
 
+        const University & operator[](size_t i) const { return this->get_item(i);}
+        const University & get_item(size_t i) const
+        {
+            if (i < this->_count) return this->_items[i];
+
+            throw std::out_of_range("Invalid index value.");
+        }
+
         University find_item(const University & query) const;
         University find_item(const UniversitySpec & query) const;
         
