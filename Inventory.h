@@ -4,6 +4,8 @@
 
 #include <memory>
 #include "University.h"
+#include "ItemSpec.h"
+#include "Item.h"
 using namespace std;
 
 class Inventory
@@ -14,23 +16,21 @@ class Inventory
             {}
 
         const University & operator[](size_t i) const { return this->get_item(i);}
-        const University & get_item(size_t i) const
+        const Item & get_item(size_t i) const
         {
-            if (i < this->_count) return this->_items[i];
+            if (i < _count) return *_items[i];
 
             throw std::out_of_range("Invalid index value.");
         }
 
-        University find_item(const University & query) const;
-        University find_item(const UniversitySpec & query) const;
+        const Item & find_item(const ItemSpec & otherSpec) const;
         
-        void add_item(int id, string name, std::shared_ptr<const UniversitySpec> spec);
-
+        void add_item(std::shared_ptr<Item> newItem);
     private:
         static const size_t MAX_SIZE{ 20 };
 
         // An array for storing abstraction objects
-        University _items[Inventory::MAX_SIZE];
+        std::shared_ptr<Item> _items[Inventory::MAX_SIZE];
 
         size_t _count;
 };

@@ -8,7 +8,7 @@
     #include <strings.h> // for strcasecmp() function in POSIX C++
 #endif
 
-bool UniversitySpec::matches(const UniversitySpec & spec) const
+bool UniversitySpec::matches(const ItemSpec & spec) const
 {
     if(this == &spec)
         return true;

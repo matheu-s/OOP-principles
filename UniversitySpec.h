@@ -3,8 +3,9 @@
 #include <cstddef> // for std::size_t
 #include <string>
 #include <iostream>
+#include "ItemSpec.h"
 
-class UniversitySpec
+class UniversitySpec : public ItemSpec
 {
     public:
         enum class Courses {ANY, SOCIOLOGIES, ENGINEERING, HEALTHS};
@@ -22,7 +23,7 @@ class UniversitySpec
         UniversitySpec::Courses getCourses() const { return _courses; }
         UniversitySpec::Location getLocation() const { return _location; }
 
-        bool matches(const UniversitySpec & spec) const;
+        bool matches(const ItemSpec & spec) const;
 
         void send_to(std::ostream & os) const;
         void recv_from(std::istream & is);

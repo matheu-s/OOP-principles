@@ -6,7 +6,7 @@
 using namespace std;
 
 // outputs abstraction object properties to the console window
-void show(const University & item)
+void show(const Item & item)
 {
     cout << item << "\n";
 }

@@ -3,6 +3,7 @@
 #define UNIVERSITY
 
 #include "UniversitySpec.h"
+#include "Item.h"
 #include <string>
 #include <memory>
 #include <iostream>
@@ -10,7 +11,7 @@
 
 using namespace std;
 
-class University
+class University : public Item
 {
     public:
         University()
@@ -24,7 +25,7 @@ class University
         string getName() const { return _name; }
         std::shared_ptr<const UniversitySpec> getSpec() const { return _spec; }
 
-        void send_to(std::ostream & os) const;
+        void send_to(std::ostream & os) const override;
     private:
         int _id;
         string _name;

@@ -10,12 +10,8 @@ std::ostream & operator<<(std::ostream & os, const University & item)
 
 void University::send_to(std::ostream & os) const
 {
+    Item::send_to(os);
+
     os << _id << ';'
        << _name;
-
-    if (_spec)
-    {
-        os << ';';
-        _spec->send_to(os);
-    }
 }
